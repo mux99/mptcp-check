@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+}
+
+#connection-status {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 18px;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.loading {
+    background-color: #f0ad4e; /* Couleur orange pour le chargement */
+}
+
+.success {
+    background-color: #5cb85c; /* Couleur verte pour la connexion établie */
+    color: white; /* Couleur du texte pour la connexion établie */
+}
+
+.error {
+    background-color: #d9534f; /* Couleur rouge pour la connexion non établie */
+    color: white; /* Couleur du texte pour la connexion non établie */
+}
+
+p {
+    margin: 0;
+}
