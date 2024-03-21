@@ -17,14 +17,9 @@ def mptcp_status_page():
 
     addr = request.remote_addr
     port = request.environ.get('REMOTE_PORT')
-    mptcp = False
 
-    conn = list(filter(None, check_output(["ss", "-Mt", "-n"]).decode("ascii").split('\n')))
-    for c in conn:
-        args = list(filter(None, c.split(' ')))
-        if (args[-1] == f"{addr}:{port}" and args[0] == "mptcp"):
-            mptcp = True
-            break
+    conn = check_output(["ss", "-MtnH", "src", f"{addr}", "sport", f"{port}"]).decode("ascii")
+    mptcp = list(filter(None, conn.split(' ')))[0] == "mptcp"
 
     if mptcp:
         state_message = 'Established'
