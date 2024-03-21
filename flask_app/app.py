@@ -18,17 +18,21 @@ def mptcp_status_page():
     addr = request.remote_addr
     port = request.environ.get('REMOTE_PORT')
 
-    conn = check_output(["ss", "-MtnH", "src", f"{addr}", "sport", f"{port}"]).decode("ascii")
-    mptcp = list(filter(None, conn.split(' ')))[0] == "mptcp"
+    try:
+        conn = check_output(["ss", "-MtnH", "src", f"{addr}", "sport", f"{port}"]).decode("ascii")
+        if (conn == ""):
 
-    if mptcp:
+
+        if list(filter(None, conn.split(' ')))[0] == "mptcp":
+            state_message = 'Established'
+            state_class = 'success'
+        else:
+            state_message = 'Not Established'
+            state_class = 'fail'
+    except:
         state_message = 'Established'
-        state_class = 'success'
-    else:
-        state_message = 'Not Established'
         state_class = 'error'
 
-    # print()
     return render_template('index.html', state_message=state_message, state_class=state_class)
 
 @app.route('/stream_audio')
