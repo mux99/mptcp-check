@@ -27,17 +27,17 @@ h1 {
 }
 
 .loading {
-    background-color: #f0ad4e; /* Couleur orange pour le chargement */
+    background-color: #f0ad4e;
 }
 
 .success {
-    background-color: #5cb85c; /* Couleur verte pour la connexion établie */
-    color: white; /* Couleur du texte pour la connexion établie */
+    background-color: #5cb85c;
+    color: white;
 }
 
 .error {
-    background-color: #d9534f; /* Couleur rouge pour la connexion non établie */
-    color: white; /* Couleur du texte pour la connexion non établie */
+    background-color: #d9534f;
+    color: white;
 }
 
 p {
