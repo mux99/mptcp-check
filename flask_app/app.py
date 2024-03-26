@@ -49,3 +49,6 @@ def stream_audio():
                 yield audio_chunk
 
     return Response(generate_audio(), mimetype='audio/mpeg')
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=80)
