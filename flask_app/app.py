@@ -21,7 +21,7 @@ def mptcp_status_page():
     try:
         conn = check_output(["ss", "-MtnH", "src", f"{addr}", "sport", f"{port}"]).decode("ascii")
         if (conn == ""):
-
+            pass
 
         if list(filter(None, conn.split(' ')))[0] == "mptcp":
             state_message = 'Established'
@@ -50,5 +50,3 @@ def stream_audio():
 
     return Response(generate_audio(), mimetype='audio/mpeg')
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
