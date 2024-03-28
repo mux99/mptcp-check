@@ -19,18 +19,20 @@ def mptcp_status_page():
     port = request.environ.get('REMOTE_PORT')
 
     try:
-        conn = check_output(["ss", "-Mtn", "src", f"{addr}", "sport", f"{port}"]).decode("ascii")
-        if (conn == ""):
+        conn_without_header = check_output(["ss", "-MtnH", "src", f"{addr}", "sport", f"{port}"]).decode("ascii")
+        conn_without_header = "\n".join(conn_without_header.split("\n")[1:])
+        if (conn_without_header == ""):
             pass
 
-        if list(filter(None, conn.split(' ')))[0] == "mptcp":
+        filtered_list = list(filter(None, conn_without_header.split(' ')))
+        if filtered_list and filtered_list[0] == "mptcp":
             state_message = 'Established'
             state_class = 'success'
         else:
             state_message = 'Not Established'
             state_class = 'fail'
     except Exception as e:
-        state_message = '[error]'
+        state_message = '[error: ' + str(e) + ']'
         state_class = 'error'
 
     return render_template('index.html', state_message=state_message, state_class=state_class)
