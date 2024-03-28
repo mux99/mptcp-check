@@ -19,12 +19,12 @@ def mptcp_status_page():
     port = request.environ.get('REMOTE_PORT')
 
     try:
-        conn = check_output(f"ss -MnH dest {addr} dport {port}").decode()
+        conn = check_output(["ss", "-MnH", "dst", f"{addr}", "dport", f"{port}"]).decode("ascii")
         if conn.startswith("ESTAB"):
-            state_message = 'Established'
+            state_message = 'are'
             state_class = 'success'
         else:
-            state_message = 'Not Established'
+            state_message = 'are not'
             state_class = 'fail'
     except Exception as e:
         state_message = '[error: ' + str(e) + ']'
