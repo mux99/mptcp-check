@@ -19,9 +19,7 @@ def mptcp_status_page():
     port = request.environ.get('REMOTE_PORT')
 
     try:
-        conn = check_output(["ss", "-MnH", "dst", f"{addr}", "dport", f"{port}"]).decode("ascii")
-        if (conn == ""):
-            pass
+        conn = check_output(f"ss -MnH dest {addr} dport {port}").decode()
         if conn.startswith("ESTAB"):
             state_message = 'Established'
             state_class = 'success'
@@ -37,9 +35,6 @@ def mptcp_status_page():
 @app.route('/stream_audio')
 def stream_audio():
     def generate_audio():
-        # Your audio streaming logic goes here
-        # You can read audio data from a file or generate it dynamically
-        # Example: Streaming a static audio file
         with open('sounds/joyful-whistle-186300.mp3', 'rb') as f:
             while True:
                 audio_chunk = f.read(1024)
@@ -48,3 +43,4 @@ def stream_audio():
                 yield audio_chunk
 
     return Response(generate_audio(), mimetype='audio/mpeg')
+
