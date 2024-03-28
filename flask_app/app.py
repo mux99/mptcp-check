@@ -29,8 +29,8 @@ def mptcp_status_page():
         else:
             state_message = 'Not Established'
             state_class = 'fail'
-    except:
-        state_message = 'Established'
+    except Exception as e:
+        state_message = '[error]'
         state_class = 'error'
 
     return render_template('index.html', state_message=state_message, state_class=state_class)
