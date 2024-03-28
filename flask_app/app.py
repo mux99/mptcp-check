@@ -19,7 +19,7 @@ def mptcp_status_page():
     port = request.environ.get('REMOTE_PORT')
 
     try:
-        conn = check_output(["ss", "-MtnH", "src", f"{addr}", "sport", f"{port}"]).decode("ascii")
+        conn = check_output(["ss", "-Mtn", "src", f"{addr}", "sport", f"{port}"]).decode("ascii")
         if (conn == ""):
             pass
 
