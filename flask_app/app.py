@@ -19,13 +19,10 @@ def mptcp_status_page():
     port = request.environ.get('REMOTE_PORT')
 
     try:
-        conn_without_header = check_output(["ss", "-MtnH", "src", f"{addr}", "sport", f"{port}"]).decode("ascii")
-        conn_without_header = "\n".join(conn_without_header.split("\n")[1:])
-        if (conn_without_header == ""):
+        conn = check_output(["ss", "-MnH", "dst", f"{addr}", "dport", f"{port}"]).decode("ascii")
+        if (conn == ""):
             pass
-
-        filtered_list = list(filter(None, conn_without_header.split(' ')))
-        if filtered_list and filtered_list[0] == "mptcp":
+        if conn.startswith("ESTAB"):
             state_message = 'Established'
             state_class = 'success'
         else:
@@ -51,4 +48,3 @@ def stream_audio():
                 yield audio_chunk
 
     return Response(generate_audio(), mimetype='audio/mpeg')
-
